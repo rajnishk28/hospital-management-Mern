@@ -3,13 +3,17 @@ const Patient = require("../models/patient.model");
 // Create and Save a new Patient
 const create = async (req, res) => {
     const { fullName, age, gender, email, phone, address } = req.body;
-    const doctorId = req.user._id;
-    console.log(doctorId);
+    const doctorId = req.user.id;
+    //console.log("doctorId",doctorId,"req.user",req.user);
     try {
         if (!fullName || !age || !gender || !email || !phone || !address) {
             return res.status(400).send({
                 message: "All fields are required"
             });
+        }
+        const existingPatient = await Patient.findOne({ email });
+        if (existingPatient) {
+            return res.status(400).send({ message: "Email is already in use" });
         }
         const patient = new Patient({
             doctorId,
@@ -21,12 +25,12 @@ const create = async (req, res) => {
             address
         });
 
-         await patient.save();
+        await patient.save();
         return res.status(201).send({ message: "Patient added successfully" });
 
     } catch (error) {
-        //console.log(error);
-        return res.status(500).send({ message: "Error occurred",error:error.message });
+        console.log(error);
+        return res.status(500).send({ message: "Error occurred", error: error.message });
     }
 }
 
@@ -90,11 +94,11 @@ const deletedPatient = async (req, res) => {
     }
 }
 
-module.exports={
+module.exports = {
     create,
     findAllPatient,
     findOnePatient,
     updatedPatient,
     deletedPatient,
-    
+
 }

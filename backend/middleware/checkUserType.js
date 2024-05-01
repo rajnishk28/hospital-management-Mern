@@ -1,5 +1,7 @@
 const jwt=require("jsonwebtoken");
 
+
+
 const isUser = (req, res, next) => {
     let token = req.headers.token;
   
@@ -15,7 +17,7 @@ const isUser = (req, res, next) => {
   
       let user = jwt.verify(token, process.env.JWT_SECRET);
       // console.log(user)
-      if (user.role === "doctor") {
+      if (user.role === "user") {
         req.user = user; 
         next();
       } else {

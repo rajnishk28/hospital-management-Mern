@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Admin = require('../models/admin.model');
+const jwt =require('jsonwebtoken');
 
 const registerAdmin = async (req, res) => {
   try {
@@ -14,8 +15,8 @@ const registerAdmin = async (req, res) => {
     if (existingAdmin) {
       return res.status(400).json({ error: 'Email is already registered' });
     }
-
-    const newAdmin = new Admin({ name, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newAdmin = new Admin({ name, email, password: hashedPassword });
     await newAdmin.save();
 
     res.status(201).json({ message: 'Admin registered successfully' });
@@ -44,14 +45,14 @@ const loginAdmin = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = admin.generateAuthToken();
+    const token =  jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
     const role = admin.role;
     const id = admin._id;
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      data: { id, role, token },
+      data: {token },
     });
   } catch (error) {
     console.error(error);
@@ -63,7 +64,7 @@ const findOneAdminById = async (req, res) => {
   const adminId = req.params.id;
 
   try {
-   
+
     // Find the admin by ID, excluding the password field
     const admin = await Admin.findById(adminId).select('-password');
 
@@ -122,39 +123,39 @@ const deleteAdminById = async (req, res) => {
 //update admin
 const updateAdminById = async (req, res) => {
   const adminId = req.params.id;
-  const { name, email} = req.body;
+  const { name, email } = req.body;
 
   try {
-      // Check if the admin with the provided ID exists
-      const admin = await Admin.findById(adminId);
+    // Check if the admin with the provided ID exists
+    const admin = await Admin.findById(adminId);
 
-      if (!admin) {
-          return res.status(404).json({
-              success: false,
-              message: "Admin not found",
-          });
-      }
-
-      // Update user fields
-      if (name) admin.name = name;
-      if (email) admin.email = email;
-      
-
-      // Save the updated user to the database
-      await admin.save();
-
-      res.status(200).json({
-          success: true,
-          message: "User updated successfully",
-          user: admin,
+    if (!admin) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin not found",
       });
+    }
+
+    // Update user fields
+    if (name) admin.name = name;
+    if (email) admin.email = email;
+
+
+    // Save the updated user to the database
+    await admin.save();
+
+    res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user: admin,
+    });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({
-          success: false,
-          message: "Internal server error",
-          error: error,
-      });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error,
+    });
   }
 };
 

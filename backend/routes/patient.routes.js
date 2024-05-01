@@ -14,5 +14,4 @@ router.put('/update/:id',isAdmin, updatedPatient);
 // Delete a patient with id
 router.delete('/delete/:id',isAdmin, deletedPatient);
 
-
 module.exports = router;

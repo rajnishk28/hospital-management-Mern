@@ -1,0 +1,33 @@
+
+
+.nav-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80px;
+    background-color:#F8F8F8;
+    color: black;
+    font-family: 'Poppins', sans-serif;
+}
+.ul-item{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.list-item{
+    list-style: none;
+    margin: 0 23px;
+}
+
+.left{
+    font-size: 1.5rem;
+}
+.firstsection{
+    display: flex;
+    justify-content: space-around;
+    margin: 23px 0;
+}
+.leftsection{
+    width: 34px;
+    
+}

@@ -8,6 +8,10 @@
     background-color:#F8F8F8;
     color: black;
     font-family: 'Poppins', sans-serif;
+    a{
+        text-decoration: none;
+        color: black;
+    }
 }
 .ul-item{
     display: flex;

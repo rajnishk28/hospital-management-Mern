@@ -47,7 +47,7 @@ const AdminLogin = () => {
       <div className="login-page">
         <Toaster/>
         <div className="form">
-        <h3>Admin Login</h3>
+        <h3>Doctor Login</h3>
 
           <form className="login-form">
             <input type="text" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />

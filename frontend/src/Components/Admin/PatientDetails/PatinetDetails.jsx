@@ -5,7 +5,7 @@ import baseUrl from "../../api"
 import { useNavigate,Link } from 'react-router-dom';
 
 
-const UserDetails = () => {
+const PatientDetails = () => {
     const [data, setData] = useState(null);
     const navigate = useNavigate();
 
@@ -20,13 +20,13 @@ const UserDetails = () => {
                     return;
                 }
 
-                const response = await axios.get(`${baseUrl}/user/findall`, {
+                const response = await axios.get(`${baseUrl}/patient/getall`, {
                     headers: {
                         token: `bearer ${token}`,
                     },
                 });
-
-                setData(response.data.users);
+                //   console.log(response.data);
+                setData(response.data);
             } catch (error) {
                 console.log(error);
                 if (error.response && error.response.status === 403) {
@@ -43,8 +43,7 @@ const UserDetails = () => {
         try {
             const token = localStorage.getItem("token");
 
-            // Make a delete API call based on the user's ID
-            await axios.delete(`${baseUrl}/user/delete/${id}`, {
+            await axios.delete(`${baseUrl}/patient/delete/${id}`, {
                 headers: {
                     token: `Bearer ${token}`,
                 },
@@ -56,6 +55,11 @@ const UserDetails = () => {
             console.log(error);
         }
     };
+   
+    const handleEdit = (id) => {
+        navigate(`/admin/edit-patient/${id}`);
+    }
+
 
     return (<>
        {data === null ? (
@@ -65,7 +69,7 @@ const UserDetails = () => {
                 <div className="datatable">
                     {/* <input type="checkbox" id="reverse" />
                     <input type="checkbox" id="type" /> */}
-                    <h2>Users</h2>
+                    <h2>Patient Details</h2>
                     <div className="row head">
 
                         <div>Name:</div>
@@ -75,6 +79,12 @@ const UserDetails = () => {
                         </div>
                         <div className="type">
                             <label htmlFor="type">Phone Number</label>
+                        </div>
+                        <div className="type">
+                            <label htmlFor="type">Gender</label>
+                        </div>
+                        <div className="type">
+                            <label htmlFor="type">Edit</label>
                         </div>
                         <div className="type">
                             <label htmlFor="type">Delete</label>
@@ -90,7 +100,9 @@ const UserDetails = () => {
                                     <div key={ele._id} className="row science">
                                         <div>{ele.fullName}</div>
                                         <div>{ele.email}</div>
-                                        <div> <p>{ele.phoneNumber}</p></div>
+                                        <div> <p>{ele.phone}</p></div>
+                                        <div> <p>{ele.gender}</p></div>
+                                        <div><button onClick={() => { handleEdit(ele._id) }}>Edit</button></div>
                                         <div><button onClick={() => { handleDelete(ele._id) }}>delete</button></div>
 
                                     </div>
@@ -108,4 +120,4 @@ const UserDetails = () => {
     )
 }
 
-export default UserDetails
+export default PatientDetails

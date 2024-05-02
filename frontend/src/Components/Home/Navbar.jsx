@@ -22,8 +22,8 @@ const Navbar = () => {
             Signup
           </a>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to={"/admin-signup"}>Admin</Link></li>
-            <li><Link className="dropdown-item" to={"/user-signup"}>User</Link></li>
+            <li><Link className="dropdown-item" to={"/admin-signup"}>Doctor</Link></li>
+            
 
           </ul>
         </li>
@@ -33,9 +33,7 @@ const Navbar = () => {
             Login
           </a>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to={"/admin-login"}>Admin</Link></li>
-            <li><Link className="dropdown-item" to={"/user-login"}>User</Link></li>
-
+            <li><Link className="dropdown-item" to={"/admin-login"}>Doctor</Link></li>
           </ul>
         </li>
 

@@ -13,13 +13,14 @@ const AdminSignup = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [speciality, setSpeciality] = useState();
   const [error, setError] = useState('');
 
   const handleSignup = async (e) => {
     e.preventDefault();
     
     try {
-      const response = await axios.post(`${baseUrl}/admin/signup`, { name, email,password });
+      const response = await axios.post(`${baseUrl}/admin/signup`, { name, email,password,speciality });
        console.log(response);
       if (response.status == 201) {
         toast.success('Account created')
@@ -40,12 +41,13 @@ const AdminSignup = () => {
       <div className="login-page">
         <Toaster/>
         <div className="form">
-        <h3>Admin Signup</h3>
+        <h3>Doctor Signup</h3>
 
           <form className="login-form">
             <input type="text" placeholder="Name" onChange={(e) => { setName(e.target.value) }} />
             <input type="email" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
             <input type="password" placeholder="Password" onChange={(e) => { setPassword(e.target.value) }} />
+            <input type="text" placeholder="Speciality" onChange={(e) => { setSpeciality(e.target.value) }} />
             <button onClick={handleSignup}>Signup</button>
             {error && <p className="error-message">{error}</p>}
             <p className="message">

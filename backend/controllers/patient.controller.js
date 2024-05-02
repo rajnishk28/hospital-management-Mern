@@ -36,8 +36,9 @@ const create = async (req, res) => {
 
 // Retrieve and return all patients from the database
 const findAllPatient = async (req, res) => {
+    const doctorId = req.user.id;
     try {
-        const patients = await Patient.find();
+        const patients = await Patient.find({ doctorId });
         return res.send(patients);
     } catch (error) {
         console.log(error);

@@ -35,9 +35,15 @@ const Sidebar = () => {
             </Link>
           </li>
           <li className="has-subnav">
-            <Link to={"/admin/users"}>
+            <Link to={"/admin/create"}>
+              <i className="fa fa-camera-retro fa-2x" />
+              <span className="nav-text">Create Patient</span>
+            </Link>
+          </li>
+          <li className="has-subnav">
+            <Link to={"/admin/patient"}>
               <i className="fa fa-users" />
-              <span className="nav-text">All Users</span>
+              <span className="nav-text">All Patient</span>
             </Link>
           </li>
           <li className="has-subnav">
@@ -46,12 +52,7 @@ const Sidebar = () => {
               <span className="nav-text">Profile</span>
             </Link>
           </li>
-          <li className="has-subnav">
-            <a href="#">
-              <i className="fa fa-camera-retro fa-2x" />
-              <span className="nav-text">Product</span>
-            </a>
-          </li>
+         
           <li>
             <a href="#">
               <i className="fa fa-film fa-2x" />

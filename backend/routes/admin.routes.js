@@ -5,8 +5,6 @@ const { registerAdmin,loginAdmin,
 const {isAdmin} =require("../middleware/checkUserType")
 
 
-
-
 router.post("/signup",registerAdmin);
 router.post("/login",loginAdmin);
 router.get("/findone/:id",isAdmin,findOneAdminById);

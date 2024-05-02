@@ -1,5 +1,5 @@
-// const baseUrl = "https://backend-z50a.onrender.com";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://hospital-management-mern.vercel.app";
+// const baseUrl = "http://localhost:8080";
 
 
 

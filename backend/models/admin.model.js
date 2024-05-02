@@ -18,10 +18,14 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    speciality:{
+        type:String,
+        required:true
+    },
     role: {
         type: String,
-        enum: ['doctor'],
-        default: 'doctor',
+        enum: ['admin'],
+        default: 'admin',
     },
 }, { timestamps: true });
 

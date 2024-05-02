@@ -2,7 +2,7 @@ const express =require("express");
 const router =express.Router();
 const { registerAdmin,loginAdmin,
     findOneAdminById,deleteAdminById,updateAdminById}= require("../controllers/admin.controller");
-const {isAdmin,isUser} =require("../middleware/checkUserType")
+const {isAdmin} =require("../middleware/checkUserType")
 
 
 

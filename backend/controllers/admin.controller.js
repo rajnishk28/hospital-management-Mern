@@ -4,10 +4,10 @@ const jwt =require('jsonwebtoken');
 
 const registerAdmin = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password,speciality } = req.body;
 
     // Check if any field is empty
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !speciality) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -16,7 +16,7 @@ const registerAdmin = async (req, res) => {
       return res.status(400).json({ error: 'Email is already registered' });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newAdmin = new Admin({ name, email, password: hashedPassword });
+    const newAdmin = new Admin({ name, email, password: hashedPassword ,speciality});
     await newAdmin.save();
 
     res.status(201).json({ message: 'Admin registered successfully' });
@@ -45,14 +45,14 @@ const loginAdmin = async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token =  jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    const token =  jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, { expiresIn: '24h' })
     const role = admin.role;
     const id = admin._id;
 
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      data: {token },
+      data: {token,role,id },
     });
   } catch (error) {
     console.error(error);
